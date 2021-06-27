@@ -25,6 +25,21 @@ public class RedisBloomFilter {
     private JedisResourcePool jedisResourcePool;
 
     /**
+     * 构造布隆过滤器。默认重复率0.03
+     *
+     * @param numApproxElements 预估元素数量
+     * @param jedisResourcePool Codis专用的Jedis连接池
+     */
+    public RedisBloomFilter(int numApproxElements, JedisResourcePool jedisResourcePool) {
+        this.numApproxElements = numApproxElements;
+        this.fpp = 0.03D;
+        this.jedisResourcePool = jedisResourcePool;
+
+        bitmapLength = (int) (-numApproxElements * Math.log(fpp) / (Math.log(2) * Math.log(2)));
+        numHashFunctions = Math.max(1, (int) Math.round((double) bitmapLength / numApproxElements * Math.log(2)));
+    }
+
+    /**
      * 构造布隆过滤器。注意：在同一业务场景下，三个参数务必相同
      *
      * @param numApproxElements 预估元素数量

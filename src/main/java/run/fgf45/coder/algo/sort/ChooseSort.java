@@ -9,6 +9,7 @@ public class ChooseSort {
         for (int i = 0; i < data.length; i++) {
             int j = i;
             int index = j;
+            //find index of max value
             for (; j < data.length; j++) {
                 if (data[index] >= data[j]) {
                     index = j;
@@ -22,12 +23,8 @@ public class ChooseSort {
         return data;
     }
 
-    public static int findMaxValueIndex(int[] data) {
-        return -1;
-    }
-
     public static void main(String[] args) {
-        int[] data = {1, 3, 2, 6, 8, 9, 0, 12314, 5};
+        int[] data = {0,1,2,3,4,5,6,7,8,9,1};
         data = chooseSort(data);
         System.out.println(data);
     }
